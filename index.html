@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html manifest="animate-select.manifest" lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <title>animate select</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-title" content="animate select" />
+    <link href="favicon.ico" rel="shortcut icon">
+    <link href="favicon.gif" rel="icon" type="image/gif">
+    <style type="text/css">
+      html, body { margin: 0; padding: 0; background: #DCDCDC; color: #2187e7; height: 100%; }
+      h1 { font-size: 14px }
+      #app-viewport { padding: 25px; }
+      #select-group {
+        margin-left: -50px;
+        position: relative;
+      }
+      .animate-select:nth-child(1) {
+        z-index: 50;
+      }
+      .animate-select:nth-child(2) {
+        z-index: 49;
+      }
+      .animate-select:nth-child(3) {
+        z-index: 48;
+      }
+      .animate-select:nth-child(4) {
+        z-index: 47;
+      }
+      .animate-select:nth-child(5) {
+        z-index: 46;
+      }
+      .animate-select:nth-child(6) {
+        z-index: 45;
+      }
+      .animate-select:nth-child(7) {
+        z-index: 44;
+      }
+      .animate-select:nth-child(8) {
+        z-index: 43;
+      }
+      .animate-select {
+        list-style: none;
+        margin: 0;
+        padding: 0 30px 0 0;
+        width: 200px;
+        color: #fff;
+        font-weight: 700;
+        margin: 0 0 -10px 0;
+      	-webkit-perspective-origin:   50% 0%;
+      	perspective-origin:           50% 0%;
+        -webkit-perspective:  100px;
+        perspective:          100px;
+        cursor: pointer;
+        position: relative;
+      }
+      .animate-select.selected {
+        margin: 0 0 -15px 0;
+      }
+      .animate-select div {
+        background-color: #2187e7;
+        text-align: right;
+        position: relative;
+        -webkit-transform:  rotateX(65deg);
+        transform:          rotateX(65deg);
+        border-radius: 0 0 6px 6px;
+        box-shadow: -9px 8px 1px 0px rgba(22, 22, 22, 0.2); 
+        outline: 0 none;
+        cursor: pointer;
+        margin-top: -12px;
+      }
+      .animate-select.selected div {
+        margin-right: -10px;
+        margin-top: -19px;
+        background-color: #135CA0;
+      }
+      .animate-select div input {
+        visibility: hidden;
+        position: absolute;
+        left: 50%;
+        top: 20%;
+        outline: 0 none;
+      }
+      .animate-select div label {
+        font-size: 34px;
+        display: block;
+        padding: 0 12px 0 0;
+        cursor: pointer;
+        -webkit-transition: font-size .5s ease-in-out; -moz-transition: font-size .5s ease-in-out; transition: font-size .5s ease-in-out;
+      }
+      .animate-select.selected div label {
+        text-shadow: 0px 0px 2px #000, -2px 2px 12px #fff, 2px -2px 12px #fff;
+        padding: 8px 12px 2px 0;
+      }
+      body.touch-landscape .animate-select div label {
+        font-size: 28px;
+      }
+      .selection {
+        padding: 0 15px;
+      }
+    </style>
+  </head>
+  <body id="app">
+    <div id="app-viewport">
+      <section id="" class="">
+        <h1>Select an option below:</h1>
+        <form id="animate-form" action="#" method="get">
+          <div id="select-group">
+            <div class="animate-select">
+              <div><input id="item-8" type="radio" name="selection" value="8"> <label for="item-8">8</label></div>
+            </div>
+            <div class="animate-select">
+              <div><input id="item-7" type="radio" name="selection" value="7"> <label for="item-7">7</label></div>
+            </div>
+            <div class="animate-select">
+              <div><input id="item-6" type="radio" name="selection" value="6"> <label for="item-6">6</label></div>
+            </div>
+            <div class="animate-select">
+              <div><input id="item-5" type="radio" name="selection" value="5"> <label for="item-5">5</label></div>
+            </div>
+            <div class="animate-select">
+              <div><input id="item-4" type="radio" name="selection" value="4"> <label for="item-4">4</label></div>
+            </div>
+            <div class="animate-select">
+              <div><input id="item-3" type="radio" name="selection" value="3"> <label for="item-3">3</label></div>
+            </div>
+            <div class="animate-select">
+              <div><input id="item-2" type="radio" name="selection" value="2"> <label for="item-2">2</label></div>
+            </div>
+            <div class="animate-select">            
+              <div><input id="item-1" type="radio" name="selection" value="1"> <label for="item-1">1</label></div>
+            </div>
+          </div>
+        </form>
+  
+        <div id="output"></div>
+      </section>
+    </div>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript">
+      (function($, window, document, undefined){
+        
+        window.addEventListener('load', function(e) {
+    			window.applicationCache.addEventListener('updateready', function(e) {
+    				if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+    					window.applicationCache.swapCache();
+    				}
+    			}, false);
+
+    		}, false);
+        
+        var $animate_form = $('#animate-form')
+          , $output = $('#output')
+          , $head = $('head')
+          , $select_group = $('#select-group')
+          , $animate_select = $('.animate-select')
+          , sel = $select_group[0]
+          , IS_TOUCH_DEVICE = !!( 'ontouchstart' in window )
+          , clickable_targets = {}
+          , triggerSubmit = null;
+          
+        //if( IS_TOUCH_DEVICE ){
+          //$head.append('<link id="icon" href="apple-touch-icon-114x114.png" rel="apple-touch-icon-precomposed" />');
+        //}
+        
+        $animate_select.each(function(i){
+          var $this = $(this)
+            , $div = $this.find('div')
+            , $input = $this.find('input');
+        
+          $this.click(function(){
+            if(triggerSubmit != null){
+              clearTimeout(triggerSubmit);
+              triggerSubmit = null;
+            }
+            var $this = $(this)
+              , $selected = $('.selected');
+            $selected.removeClass('selected');
+            $this.addClass('selected');
+            $input.prop('checked',true);
+            triggerSubmit = setTimeout(function(){
+              $animate_form.trigger('submit');
+            }, 1000);
+          });
+          
+          clickable_targets[$div.offset().top] = $div.parent();
+        });
+        
+        $animate_form.submit(function(e){
+          e.preventDefault();
+          var floor = parseInt($('input[name=selection]:checked', $animate_form).val());
+          //if( IS_TOUCH_DEVICE ){
+            $head.find('link[rel=apple-touch-icon-precomposed]').remove();
+            var img = new Image();
+            var canvas = document.createElement('canvas');
+            canvas.width = 144;
+            canvas.height = 144;
+      			var context = canvas.getContext("2d");
+      			img.src = 'resources/floor-'+floor+'.png';
+
+      			img.onload = function() {
+      				context.drawImage(img, 00, 00);
+      				var baseImg = canvas.toDataURL();
+      				$('head').append('<link id="icon" rel="apple-touch-icon-precomposed" href="' + baseImg + '" />');
+      			};
+          //}
+          $output.html('<p><strong>Your selection:</strong><span class="selection">'+floor+'</span></p>');
+          clearTimeout(triggerSubmit);
+          triggerSubmit = null;
+          return false;
+        });
+        
+        function process_touch(y){
+          var last = null;
+          for( i in clickable_targets ){            
+            if( y < i ){
+              if( last === null ){
+                last = i;
+              }
+              break;
+            }
+            last = i;
+          }
+          if( last != null ){
+            clickable_targets[last].trigger('click');
+          }
+          return true;
+        }
+        
+        function handleStart(e){
+          e.preventDefault();
+          process_touch(e.touches[0].clientY);
+          return false;
+        }
+        function handleMove(e){
+          e.preventDefault();
+          if(triggerSubmit != null){
+            clearTimeout(triggerSubmit);
+            triggerSubmit = null;
+          }
+          process_touch(e.touches[0].clientY);
+          return false;
+        }
+        function handleEnd(e){
+          e.preventDefault();
+          $output.html('<p><strong>Your end:</strong><span class="selection">'+e.touches[0].clientY+'</span></p>');
+          return false;
+        }
+        sel.addEventListener( 'touchstart', handleStart, false );
+        sel.addEventListener( 'touchmove', handleMove, false );
+        sel.addEventListener( 'touchend', handleEnd, false );
+        sel.addEventListener( 'touchcancel', handleWindow, false);
+        sel.addEventListener( 'touchleave', handleWindow, false);
+        
+        function handleWindow(e){
+          e.preventDefault();
+          return false;
+        }
+        window.addEventListener( 'touchstart', handleWindow, false );
+        window.addEventListener( 'touchmove', handleWindow, false );
+        window.addEventListener( 'touchend', handleWindow, false );
+        window.addEventListener( 'touchcancel', handleWindow, false);
+        window.addEventListener( 'touchleave', handleWindow, false);
+        
+        $(window).bind('orientationchange', function(){
+          var $body = $(document.body);
+          if (Math.abs(window.orientation) === 90 || Math.abs(window.orientation) === -90) {
+            $body.addClass('touch-landscape');
+          } else {
+            $body.removeClass('touch-landscape');
+          }
+        });//.trigger('orientationchange');
+        
+      })(jQuery, window, window.document);
+    </script>
+  </body>
+</html>
